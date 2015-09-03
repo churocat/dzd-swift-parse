@@ -15,8 +15,10 @@ typealias DZDUser = PFUser
 //}
 
 extension PFQuery {
+    
     func executeAsync(block: PFArrayResultBlock?) {
         self.findObjectsInBackgroundWithBlock(block)
+
     }
     
     func execute() -> [AnyObject]? {
@@ -68,17 +70,18 @@ class DZDDataCenter {
         query.fetchByObjectIdAsync(gameId, block: { (object, error) -> Void in
             if let game = object {
                 if let members = game[DZDDB.Game.Members] as? [DZDUser] {
-                    var orderedMembers: [DZDUser] = []
+                    var otherMembers: [DZDUser] = []
                     for member in members {
+                        if member.objectId == user.objectId {
+                            continue
+                        }
+                        
                         let query = DZDUser.query()!
                         query.fetchByObjectIdAsync(member.objectId!) { object in
-                            if member != user {
-                                orderedMembers += [member]
-                            }
-                            
+                            otherMembers += [member]
                             // finish all query
-                            if orderedMembers.count == members.count - 1 {
-                                handler(orderedMembers)
+                            if otherMembers.count == members.count - 1 {
+                                handler(otherMembers)
                             }
                         }
                     }

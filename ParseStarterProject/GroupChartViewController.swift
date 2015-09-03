@@ -23,7 +23,6 @@ class GroupChartViewController: UIViewController, UICollectionViewDelegate, UICo
     var otherDrawableMembers: [DZDDrawableUser] = [] {
         didSet {
             println("ohh")
-            
             memberCollectionView.reloadData()
         }
     }
@@ -39,6 +38,9 @@ class GroupChartViewController: UIViewController, UICollectionViewDelegate, UICo
     }
     
     func refreshMembers() {
+        
+        currentDrawableUser.fetchProfileImage {}
+        
         DZDDataCenter.fetchGameId(currentDrawableUser.user) { gameId in
             if let gameId = gameId {
                 println("gameId: \(gameId)")
@@ -46,7 +48,15 @@ class GroupChartViewController: UIViewController, UICollectionViewDelegate, UICo
                 DZDDataCenter.fetchGameOtherMembers(gameId, user: self.currentDrawableUser.user) { members in
                     if let members = members {
                         let drawableMembers = members.map { DZDDrawableUser(user: $0) }
-                        self.otherDrawableMembers = drawableMembers
+                        
+                        var count = 0
+                        for drawableMember in drawableMembers {
+                            drawableMember.fetchProfileImage {
+                                if ++count == drawableMembers.count {
+                                    self.otherDrawableMembers = drawableMembers
+                                }
+                            }
+                        }
                     }
                 }
             }

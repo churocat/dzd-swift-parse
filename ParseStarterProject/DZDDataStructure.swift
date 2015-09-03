@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 
+
 class DZDDrawableUser {
     var user: DZDUser
     var profileImage: UIImage
@@ -19,8 +20,15 @@ class DZDDrawableUser {
         self.profileImage = UIImage()
         self.color = DZDUtility.getColor()
 
+//        DZDDataCenter.fetchProfileImageData(user) { imageData in
+//            self.profileImage = UIImage(data: imageData)!
+//        }
+    }
+    
+    func fetchProfileImage(handler: (Void -> Void)) {
         DZDDataCenter.fetchProfileImageData(user) { imageData in
             self.profileImage = UIImage(data: imageData)!
+            handler()
         }
     }
 }
