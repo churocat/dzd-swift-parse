@@ -14,12 +14,6 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     
-    override func viewDidAppear(animated: Bool) {
-        if DZDUser.currentUser() != nil {
-            performSegueWithIdentifier(DZDSegue.ShowGroupViewChart, sender: self)
-        }
-    }
-    
     @IBAction func login() {
         if usernameTextField.text.isEmpty || passwordTextField.text.isEmpty {
             DZDUtility.showAlert("Please input username and password!", controller: self)

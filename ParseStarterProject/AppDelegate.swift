@@ -78,6 +78,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             application.registerForRemoteNotificationTypes(types)
         }
 
+        // choose initial view controller
+        let initialViewIdentity = DZDUser.currentUser()?.objectId == nil ? "LoginView" : "GroupChartView"
+        self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
+        var storyboard = UIStoryboard(name: "Main", bundle: nil)
+        var initialViewController = storyboard.instantiateViewControllerWithIdentifier(initialViewIdentity) as! UIViewController
+        self.window?.rootViewController = initialViewController
+        self.window?.makeKeyAndVisible()
+
         return true
     }
 
