@@ -29,10 +29,10 @@ class DZDUtility {
     static func getColor() -> UIColor {
         var allColors = [
             UIColor(R: 0, G: 103, B: 166),
-            UIColor(R: 0, G: 171, B: 216),
-            UIColor(R: 0, G: 137, B: 144),
-            UIColor(R: 245, G: 197, B: 100),
             UIColor(R: 242, G: 87, B: 45),
+            UIColor(R: 245, G: 197, B: 100),
+            UIColor(R: 0, G: 137, B: 144),
+            UIColor(R: 0, G: 171, B: 216),
         ]
         return allColors[(++colorCount % allColors.count)]
     }
