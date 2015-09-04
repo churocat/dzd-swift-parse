@@ -77,8 +77,7 @@ class DZDDataCenter {
                 var tasks: [BFTask] = []
                 for member in members {
                     if member.objectId != user.objectId {
-                        var q = PFUser.query()!
-                        tasks += [q.getObjectInBackgroundWithId(member.objectId!)]
+                        tasks += [member.fetchIfNeededInBackground()]
                     }
                 }
                 return BFTask(forCompletionOfAllTasksWithResults: tasks)
