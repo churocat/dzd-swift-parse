@@ -19,14 +19,13 @@ class DZDDrawableUser {
     init (user: DZDUser) {
         self.user = user
         self.profileImage = UIImage()
-        self.color = UIColor.clearColor()
+        self.color = DZDUtility.getColor()
     }
     
     func fetchProfileImage() -> BFTask! {
         return DZDDataCenter.fetchProfileImageData(user).continueWithSuccessBlock({ (task) -> AnyObject! in
             let imageData = task.result as! NSData
             self.profileImage = UIImage(data: imageData)!
-            self.color = DZDUtility.getColor()
             return nil
         })
     }
@@ -41,5 +40,11 @@ extension UIActivityIndicatorView {
     func stopAnimatingAndEndIgnoringUI() {
         self.stopAnimating()
         UIApplication.sharedApplication().endIgnoringInteractionEvents()
+    }
+}
+
+extension UIImage {
+    func isZeroSize() -> Bool {
+        return self.size == CGSize.zeroSize
     }
 }

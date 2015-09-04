@@ -62,8 +62,9 @@ class GroupChartViewController: UIViewController, UICollectionViewDelegate, UICo
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("memberCell", forIndexPath: indexPath) as! MemberCollectionViewCell
         
-        cell.profileImage.image = allDrawableMembers[indexPath.row].profileImage
-        cell.profileImage.lineColor = allDrawableMembers[indexPath.row].color
+        let profileImage = allDrawableMembers[indexPath.row].profileImage
+        cell.profileImage.image = profileImage
+        cell.profileImage.lineColor = profileImage.isZeroSize() ? UIColor.clearColor() : allDrawableMembers[indexPath.row].color
 
         return cell
     }
