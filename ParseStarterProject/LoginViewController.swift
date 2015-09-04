@@ -23,16 +23,12 @@ class LoginViewController: UIViewController {
         let username = usernameTextField.text
         let password = passwordTextField.text
         
-        // start spinner
-        spinner.startAnimating()
-        UIApplication.sharedApplication().beginIgnoringInteractionEvents()
+        spinner.startAnimatingAndBeginIgnoringUI()
 
         // login
         DZDUser.logInWithUsernameInBackground(username, password: password, block: { (user, error) -> Void in
-            // stop spinner
-            self.spinner.stopAnimating()
-            UIApplication.sharedApplication().endIgnoringInteractionEvents()
-            
+            self.spinner.stopAnimatingAndEndIgnoringUI()
+
             if user != nil {
                 self.performSegueWithIdentifier(DZDSegue.ShowGroupViewChart, sender: self)
             } else {

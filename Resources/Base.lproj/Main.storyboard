@@ -141,16 +141,22 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="pHw-cR-tu2"/>
                                 </connections>
                             </collectionView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="VLD-oY-jQr">
+                                <rect key="frame" x="290" y="290" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="oc0-Bk-RZr" secondAttribute="bottom" id="AOh-oJ-XD6"/>
                             <constraint firstItem="oc0-Bk-RZr" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="FR7-DP-OoH"/>
+                            <constraint firstAttribute="centerY" secondItem="VLD-oY-jQr" secondAttribute="centerY" id="H72-M0-7EV"/>
+                            <constraint firstAttribute="centerX" secondItem="VLD-oY-jQr" secondAttribute="centerX" id="P4J-Se-0iN"/>
                             <constraint firstAttribute="trailing" secondItem="oc0-Bk-RZr" secondAttribute="trailing" id="jyl-0B-RTh"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="memberCollectionView" destination="oc0-Bk-RZr" id="Q4Q-3t-3uQ"/>
+                        <outlet property="spinner" destination="VLD-oY-jQr" id="Xlp-JH-inc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

@@ -10,9 +10,6 @@ import Foundation
 import Parse
 
 typealias DZDUser = PFUser
-//class DZDUser : PFUser {
-
-//}
 
 extension PFQuery {
     
@@ -34,71 +31,65 @@ extension PFQuery {
     }
 }
 
-class DZDDataCenter {
-    
-    static func fetchGroupId(username: String, handler: (String? -> Void)) {
-        let query = PFQuery(className: DZDDB.TabelParticipate)
-        query.whereKey(DZDDB.Participate.Username, equalTo: username)
-        query.executeAsync { (objects, error) -> Void in
-            if let objects = objects as? [PFObject] {
-                if objects.count > 0 {
-                    handler(objects[0][DZDDB.Participate.GroupId]! as? String)
-                }
-            }
+extension BFTask {
+    convenience init(DZDErrorInfo: String, DZDErrorCode: Int) {
+        self.init(error: NSError(domain: "DZD", code: DZDErrorCode, userInfo: ["error" : DZDErrorInfo]))
+    }
+    convenience init(DZDErrorInfo: String) {
+        self.init(DZDErrorInfo: DZDErrorInfo, DZDErrorCode: 5566)
+    }
+}
+
+class DZDParseUtility {
+    static func checkResultArrayNotZero(result: AnyObject!) -> [PFObject]? {
+        if let result = result as? [PFObject] {
+            return result.count > 0 ? result : nil
+        } else {
+            return nil
         }
     }
-    
+}
+
+class DZDDataCenter {
+  
     // NOT support one user in multiple game
     // return the first game's id
-    static func fetchGameId(user: DZDUser, handler: (String? -> Void)) {
+    static func fetchGameId(user: DZDUser) -> BFTask! {
         let query = PFQuery(className: DZDDB.TabelGame)
         query.whereKey(DZDDB.Game.Members, equalTo: user)
         query.includeKey(DZDDB.Game.Members)
-        query.executeAsync { (objects, error) -> Void in
-            if let objects = objects as? [PFObject] {
-                if objects.count > 0 {
-                    handler(objects[0].objectId)
-                }
+        return query.findObjectsInBackground().continueWithSuccessBlock { (task) -> BFTask! in
+            if let games = DZDParseUtility.checkResultArrayNotZero(task.result) {
+                return BFTask(result: games[0].objectId)
+            } else {
+                return BFTask(DZDErrorInfo: "result is an empty array or not an array")
             }
         }
     }
     
     // NOT support one user in multiple game
     // return the first game's id
-    static func fetchGameOtherMembers(gameId: String, user: DZDUser, handler: ([DZDUser]? -> Void)) {
+    static func fetchGameOtherMembers(gameId: String, user: DZDUser) -> BFTask! {
         let query = PFQuery(className: DZDDB.TabelGame)
-        query.fetchByObjectIdAsync(gameId, block: { (object, error) -> Void in
-            if let game = object {
-                if let members = game[DZDDB.Game.Members] as? [DZDUser] {
-                    var otherMembers: [DZDUser] = []
-                    for member in members {
-                        if member.objectId == user.objectId {
-                            continue
-                        }
-                        
-                        let query = DZDUser.query()!
-                        query.fetchByObjectIdAsync(member.objectId!) { object in
-                            otherMembers += [member]
-                            // finish all query
-                            if otherMembers.count == members.count - 1 {
-                                handler(otherMembers)
-                            }
-                        }
+        return query.getObjectInBackgroundWithId(gameId).continueWithSuccessBlock( { (task) -> BFTask! in
+            if let game = task.result as? PFObject {
+                let members = game[DZDDB.Game.Members] as! [DZDUser]
+                var tasks: [BFTask] = []
+                for member in members {
+                    if member.objectId != user.objectId {
+                        var q = PFUser.query()!
+                        tasks += [q.getObjectInBackgroundWithId(member.objectId!)]
                     }
                 }
+                return BFTask(forCompletionOfAllTasksWithResults: tasks)
+            } else {
+                return BFTask(DZDErrorInfo: "didn't found a game with id: \(gameId)")
             }
         })
     }
     
-    static func fetchProfileImageData(user: DZDUser, handler: (NSData -> Void)) {
+    static func fetchProfileImageData(user: DZDUser) -> BFTask! {
         let userImageFile = user[DZDDB.User.Image] as! PFFile
-        userImageFile.getDataInBackgroundWithBlock {
-            (imageData: NSData?, error: NSError?) -> Void in
-            if error == nil {
-                if let imageData = imageData {
-                    handler(imageData)
-                }
-            }
-        }
+        return userImageFile.getDataInBackground()
     }
 }

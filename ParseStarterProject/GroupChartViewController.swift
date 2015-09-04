@@ -8,25 +8,28 @@
 */
 
 import UIKit
-import Parse
+import Bolts
 
 class GroupChartViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
     // MARK: - Outlet
     
     @IBOutlet weak var memberCollectionView: UICollectionView!
+    @IBOutlet weak var spinner: UIActivityIndicatorView!
     
     // MARK: - Property
     
     let currentDrawableUser = DZDDrawableUser(user: DZDUser.currentUser()!)
-    
     var otherDrawableMembers: [DZDDrawableUser] = [] {
         didSet {
-            println("ohh")
-            memberCollectionView.reloadData()
+            let tasks: [BFTask] = allDrawableMembers.map{ $0.fetchProfileImage() }
+            BFTask(forCompletionOfAllTasks: tasks).continueWithSuccessBlock({ (task) -> AnyObject! in
+                self.memberCollectionView.reloadData()
+                self.spinner.stopAnimatingAndEndIgnoringUI()
+                return nil
+            })
         }
     }
-    
     var allDrawableMembers: [DZDDrawableUser] { return [currentDrawableUser] + otherDrawableMembers }
     
     // MARK: - Controller
@@ -38,31 +41,17 @@ class GroupChartViewController: UIViewController, UICollectionViewDelegate, UICo
     }
     
     func refreshMembers() {
+        spinner.startAnimatingAndBeginIgnoringUI()
         
-        currentDrawableUser.fetchProfileImage {}
-        
-        DZDDataCenter.fetchGameId(currentDrawableUser.user) { gameId in
-            if let gameId = gameId {
-                println("gameId: \(gameId)")
-                
-                DZDDataCenter.fetchGameOtherMembers(gameId, user: self.currentDrawableUser.user) { members in
-                    if let members = members {
-                        let drawableMembers = members.map { DZDDrawableUser(user: $0) }
-                        
-                        var count = 0
-                        for drawableMember in drawableMembers {
-                            drawableMember.fetchProfileImage {
-                                if ++count == drawableMembers.count {
-                                    self.otherDrawableMembers = drawableMembers
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        DZDDataCenter.fetchGameId(currentDrawableUser.user).continueWithSuccessBlock({ (task) -> BFTask! in
+            let gameId = task.result as! String
+            return DZDDataCenter.fetchGameOtherMembers(gameId, user: self.currentDrawableUser.user)
+        }).continueWithSuccessBlock({ (task) -> AnyObject! in
+            let members = task.result as!  [DZDUser]
+            self.otherDrawableMembers = members.map { return DZDDrawableUser(user: $0) }
+            return nil
+        })
     }
-    
 
     // MARK: - UICollectionView
     

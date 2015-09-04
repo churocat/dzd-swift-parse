@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import Bolts
 
 
 class DZDDrawableUser {
@@ -18,17 +19,27 @@ class DZDDrawableUser {
     init (user: DZDUser) {
         self.user = user
         self.profileImage = UIImage()
-        self.color = DZDUtility.getColor()
-
-//        DZDDataCenter.fetchProfileImageData(user) { imageData in
-//            self.profileImage = UIImage(data: imageData)!
-//        }
+        self.color = UIColor.clearColor()
     }
     
-    func fetchProfileImage(handler: (Void -> Void)) {
-        DZDDataCenter.fetchProfileImageData(user) { imageData in
+    func fetchProfileImage() -> BFTask! {
+        return DZDDataCenter.fetchProfileImageData(user).continueWithSuccessBlock({ (task) -> AnyObject! in
+            let imageData = task.result as! NSData
             self.profileImage = UIImage(data: imageData)!
-            handler()
-        }
+            self.color = DZDUtility.getColor()
+            return nil
+        })
+    }
+}
+
+extension UIActivityIndicatorView {
+    func startAnimatingAndBeginIgnoringUI() {
+        self.startAnimating()
+        UIApplication.sharedApplication().beginIgnoringInteractionEvents()
+    }
+
+    func stopAnimatingAndEndIgnoringUI() {
+        self.stopAnimating()
+        UIApplication.sharedApplication().endIgnoringInteractionEvents()
     }
 }
