@@ -13,21 +13,12 @@ typealias DZDUser = PFUser
 
 extension PFQuery {
     
-    func executeAsync(block: PFArrayResultBlock?) {
-        self.findObjectsInBackgroundWithBlock(block)
-
+    func execute() -> BFTask {
+        return self.findObjectsInBackground()
     }
     
-    func execute() -> [AnyObject]? {
-        return self.findObjects()
-    }
-    
-    func fetchByObjectIdAsync(objectId: String, block: PFObjectResultBlock?){
-        self.getObjectInBackgroundWithId(objectId, block: block)
-    }
-    
-    func fetchByObjectId(objectId: String) -> PFObject? {
-        return self.getObjectWithId(objectId)
+    func fetchByObjectId(objectId: String) -> BFTask {
+        return self.getObjectInBackgroundWithId(objectId)
     }
 }
 
@@ -58,7 +49,7 @@ class DZDDataCenter {
         let query = PFQuery(className: DZDDB.TabelGame)
         query.whereKey(DZDDB.Game.Members, equalTo: user)
         query.includeKey(DZDDB.Game.Members)
-        return query.findObjectsInBackground().continueWithSuccessBlock { (task) -> BFTask! in
+        return query.execute().continueWithSuccessBlock { (task) -> BFTask! in
             if let games = DZDParseUtility.checkResultArrayNotZero(task.result) {
                 return BFTask(result: games[0].objectId)
             } else {
@@ -71,7 +62,7 @@ class DZDDataCenter {
     // return the first game's id
     static func fetchGameOtherMembers(gameId: String, user: DZDUser) -> BFTask! {
         let query = PFQuery(className: DZDDB.TabelGame)
-        return query.getObjectInBackgroundWithId(gameId).continueWithSuccessBlock( { (task) -> BFTask! in
+        return query.fetchByObjectId(gameId).continueWithSuccessBlock( { (task) -> BFTask! in
             if let game = task.result as? PFObject {
                 let members = game[DZDDB.Game.Members] as! [DZDUser]
                 var tasks: [BFTask] = []
