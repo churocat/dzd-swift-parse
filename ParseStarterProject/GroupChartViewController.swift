@@ -24,8 +24,10 @@ class GroupChartViewController: UIViewController, UICollectionViewDelegate, UICo
         didSet {
             let tasks: [BFTask] = allDrawableMembers.map{ $0.fetchProfileImage() }
             BFTask(forCompletionOfAllTasks: tasks).continueWithSuccessBlock({ (task) -> AnyObject! in
-                self.memberCollectionView.reloadData()
-                self.spinner.stopAnimatingAndEndIgnoringUI()
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.memberCollectionView.reloadData()
+                    self.spinner.stopAnimatingAndEndIgnoringUI()
+                }
                 return nil
             })
         }
