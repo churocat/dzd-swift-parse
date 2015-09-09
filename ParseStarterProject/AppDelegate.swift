@@ -78,6 +78,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             application.registerForRemoteNotificationTypes(types)
         }
 
+        // hide the status bar
+        UIApplication.sharedApplication().statusBarHidden = true
+
         // choose initial view controller
         let initialViewIdentity = DZDUser.currentUser()?.objectId == nil ? "LoginView" : "GroupChartView"
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
