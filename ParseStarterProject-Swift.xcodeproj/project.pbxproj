@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		480283201BA01AD5000281FD /* AddItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4802831F1BA01AD5000281FD /* AddItemViewController.swift */; };
 		486FFA6A1B953FBC000710C8 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486FFA691B953FBC000710C8 /* LoginViewController.swift */; };
 		486FFA6C1B95418C000710C8 /* DZDConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486FFA6B1B95418C000710C8 /* DZDConstants.swift */; };
 		486FFA6E1B95424D000710C8 /* DZDParse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486FFA6D1B95424D000710C8 /* DZDParse.swift */; };
@@ -27,6 +28,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4802831F1BA01AD5000281FD /* AddItemViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddItemViewController.swift; sourceTree = "<group>"; };
 		486FFA691B953FBC000710C8 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		486FFA6B1B95418C000710C8 /* DZDConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DZDConstants.swift; sourceTree = "<group>"; };
 		486FFA6D1B95424D000710C8 /* DZDParse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DZDParse.swift; sourceTree = "<group>"; };
@@ -83,6 +85,7 @@
 			children = (
 				81BA814C1A49DA1800E65899 /* GroupChartViewController.swift */,
 				486FFA691B953FBC000710C8 /* LoginViewController.swift */,
+				4802831F1BA01AD5000281FD /* AddItemViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -253,6 +256,7 @@
 				486FFA6C1B95418C000710C8 /* DZDConstants.swift in Sources */,
 				486FFA721B95C45E000710C8 /* MemberCollectionViewCell.swift in Sources */,
 				486FFA701B954584000710C8 /* DZDUtility.swift in Sources */,
+				480283201BA01AD5000281FD /* AddItemViewController.swift in Sources */,
 				486FFA6E1B95424D000710C8 /* DZDParse.swift in Sources */,
 				486FFA6A1B953FBC000710C8 /* LoginViewController.swift in Sources */,
 				81BA814D1A49DA1800E65899 /* GroupChartViewController.swift in Sources */,

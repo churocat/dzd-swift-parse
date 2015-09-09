@@ -10,14 +10,17 @@ import Foundation
 import UIKit
 
 class DZDUtility {
-    static func showAlert(var message: String?, title: String = "Oops!", controller: UIViewController) {
+    static func showAlert(var message: String?, title: String = "Oops!", controller: UIViewController, okCompletion: (()->Void)? = nil) {
         if message == nil {
             message = "Please try again!"
         }
         
         let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
         var actionOk = UIAlertAction(title: "Ok", style: .Default) { (action) -> Void in
-            controller.dismissViewControllerAnimated(true, completion: nil)
+            alert.dismissViewControllerAnimated(true, completion: nil)
+            if let okCompletion = okCompletion {
+                okCompletion()
+            }
         }
         alert.addAction(actionOk)
         
@@ -38,6 +41,7 @@ class DZDUtility {
     }
 }
 
+// MARK: - extension
 
 extension UIColor {
     convenience init(R: CGFloat, G: CGFloat, B: CGFloat) {
@@ -65,5 +69,13 @@ public class Reachability
             }
         }
         return status
+    }
+}
+
+extension NSDate {
+    var unixtimeString: String {
+        let timestampWithDummy = self.timeIntervalSince1970.description
+        let tokens = timestampWithDummy.componentsSeparatedByString(".")
+        return tokens[0] ?? "0"
     }
 }

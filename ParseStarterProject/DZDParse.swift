@@ -129,4 +129,12 @@ class DZDDataCenter {
         let userImageFile = user[DZDDB.User.Image] as! PFFile
         return userImageFile.getDataInBackground()
     }
+
+    static func saveWeight(weight: Double, date: NSDate) -> BFTask {
+        let obj = PFObject(className: "Weight")
+        obj["user"] = PFUser.currentUser()
+        obj["weight"] = weight
+        obj["date"] = date.unixtimeString
+        return obj.saveInBackground()
+    }
 }
