@@ -12,13 +12,59 @@ import Parse
 typealias DZDUser = PFUser
 
 extension PFQuery {
-    
+
     func execute() -> BFTask {
-        return self.findObjectsInBackground()
+        var localQuery = self.copy() as! PFQuery
+        localQuery.fromLocalDatastore()
+        return localQuery.findObjectsInBackground().continueWithBlock({ (localTask) -> AnyObject! in
+            let localResult = localTask.result as! [PFObject]
+            if !localResult.isEmpty {
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+                    if Reachability.isConnectedToNetwork() {
+                        self.executeFromNetworkAndSaveToLocalDatastore()
+                    }
+                }
+                return localTask
+            } else {
+                return self.executeFromNetworkAndSaveToLocalDatastore()
+            }
+        })
     }
-    
+
+    private func executeFromNetworkAndSaveToLocalDatastore() -> BFTask {
+        return self.findObjectsInBackground().continueWithSuccessBlock { (cloudTask) -> AnyObject! in
+            let cloudResult = cloudTask.result as! [PFObject]
+            return PFObject.pinAllInBackground(cloudResult).continueWithSuccessBlock({ (task) -> BFTask! in
+                return cloudTask
+            })
+        }
+    }
+
     func fetchByObjectId(objectId: String) -> BFTask {
-        return self.getObjectInBackgroundWithId(objectId)
+        var localQuery = self.copy() as! PFQuery
+        localQuery.fromLocalDatastore()
+        return localQuery.getObjectInBackgroundWithId(objectId).continueWithBlock({ (localTask) -> AnyObject! in
+            if localTask.error == nil {
+                let localResult = localTask.result as! PFObject
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+                    if Reachability.isConnectedToNetwork() {
+                        self.fetchByObjectIdFromNetworkAndSaveToLocalDatastore(objectId)
+                    }
+                }
+                return localTask
+            } else {
+                return self.fetchByObjectIdFromNetworkAndSaveToLocalDatastore(objectId)
+            }
+        })
+    }
+
+    private func fetchByObjectIdFromNetworkAndSaveToLocalDatastore(objectId: String) -> BFTask {
+        return self.getObjectInBackgroundWithId(objectId).continueWithSuccessBlock({ (cloudTask) -> AnyObject! in
+            let cloudResult = cloudTask.result as! PFObject
+            return PFObject.pinAllInBackground([cloudResult]).continueWithSuccessBlock({ (task) -> BFTask! in
+                return cloudTask
+            })
+        })
     }
 }
 
@@ -68,7 +114,8 @@ class DZDDataCenter {
                 var tasks: [BFTask] = []
                 for member in members {
                     if member.objectId != user.objectId {
-                        tasks += [member.fetchIfNeededInBackground()]
+                        var q = PFUser.query()!
+                        tasks += [q.fetchByObjectId(member.objectId!)]
                     }
                 }
                 return BFTask(forCompletionOfAllTasksWithResults: tasks)
