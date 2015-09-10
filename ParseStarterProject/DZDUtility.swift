@@ -9,7 +9,8 @@
 import Foundation
 import UIKit
 
-class DZDUtility {
+class DZDUtility
+{
     static func showAlert(var message: String?, title: String = "Oops!", controller: UIViewController, okCompletion: (()->Void)? = nil) {
         if message == nil {
             message = "Please try again!"
@@ -43,12 +44,12 @@ class DZDUtility {
 
 // MARK: - extension
 
-extension UIColor {
+extension UIColor
+{
     convenience init(R: CGFloat, G: CGFloat, B: CGFloat) {
         self.init(red: R/255.0, green: G/255.0, blue: B/255.0, alpha: 1.0)
     }
 }
-
 
 public class Reachability
 {
@@ -72,10 +73,19 @@ public class Reachability
     }
 }
 
-extension NSDate {
-    var unixtimeString: String {
+extension NSDate
+{
+    var unixtime: Int {
         let timestampWithDummy = self.timeIntervalSince1970.description
         let tokens = timestampWithDummy.componentsSeparatedByString(".")
-        return tokens[0] ?? "0"
+        return tokens[0].toInt() ?? 0
+    }
+
+    var unixtimeZeroAM: Int {
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let dateString = dateFormatter.stringFromDate(self)
+        let date = dateFormatter.dateFromString(dateString)!
+        return date.unixtime
     }
 }

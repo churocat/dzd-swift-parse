@@ -31,6 +31,10 @@ class AddItemViewController: UIViewController
             dispatch_async(dispatch_get_main_queue()) {
                 if task.error == nil {
                     DZDUtility.showAlert("Save successfully!", title: "Yeah!", controller: self) {
+                        DZDDataCenter.getWeights().continueWithSuccessBlock({ (task) -> AnyObject! in
+                            println("weights = \(task.result)")
+                            return nil
+                        })
                         self.dismissViewControllerAnimated(true, completion: nil)
                     }
                 } else {

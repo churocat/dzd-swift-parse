@@ -30,4 +30,10 @@ struct DZDDB {
         static let Image = "image"
     }
     
+    static let TabelWeight = "Weight"
+    struct Weight {
+        static let User = "user"
+        static let Weight = "weight"
+        static let Date = "date"
+    }
 }

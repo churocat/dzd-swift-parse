@@ -131,10 +131,17 @@ class DZDDataCenter {
     }
 
     static func saveWeight(weight: Double, date: NSDate) -> BFTask {
-        let obj = PFObject(className: "Weight")
-        obj["user"] = PFUser.currentUser()
-        obj["weight"] = weight
-        obj["date"] = date.unixtimeString
-        return obj.saveInBackground()
+        let object = PFObject(className: DZDDB.TabelWeight)
+        object[DZDDB.Weight.User] = PFUser.currentUser()
+        object[DZDDB.Weight.Weight] = weight
+        object[DZDDB.Weight.Date] = date.unixtime
+        object.saveEventually()
+        return BFTask(result: true)
+    }
+
+    static func getWeights() -> BFTask {
+        let query = PFQuery(className: DZDDB.TabelWeight)
+        query.whereKey(DZDDB.Weight.User, equalTo: PFUser.currentUser()!)
+        return query.execute()
     }
 }
