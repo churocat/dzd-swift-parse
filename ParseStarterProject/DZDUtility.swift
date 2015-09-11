@@ -28,6 +28,21 @@ class DZDUtility
         controller.presentViewController(alert, animated: true, completion: nil)
     }
     
+    static func showConfirm(message: String, title: String = "Sure?", controller: UIViewController, yesCompletion: (()->Void)) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        let actionNo = UIAlertAction(title: "No", style: .Default) { (action) -> Void in
+            alert.dismissViewControllerAnimated(true, completion: nil)
+        }
+        let actionYes = UIAlertAction(title: "Yes", style: .Default) { (action) -> Void in
+            alert.dismissViewControllerAnimated(true, completion: nil)
+            yesCompletion()
+        }
+        alert.addAction(actionNo)
+        alert.addAction(actionYes)
+
+        controller.presentViewController(alert, animated: true, completion: nil)
+    }
+
     
     static var colorCount = 0
     static func getColor() -> UIColor {

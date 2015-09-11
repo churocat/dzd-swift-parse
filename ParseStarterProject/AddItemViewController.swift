@@ -38,7 +38,14 @@ class AddItemViewController: UIViewController
                         self.dismissViewControllerAnimated(true, completion: nil)
                     }
                 } else {
-                    DZDUtility.showAlert("Save failed :'(", controller: self)
+                    if task.error.code == DZDError.DuplicateValue {
+                        DZDUtility.showConfirm("當天已有資料，是否覆蓋呢？", controller: self) {
+                            DZDDataCenter.saveWeightForced(weight, date: date)
+                            self.dismissViewControllerAnimated(true, completion: nil)
+                        }
+                    } else {
+                        DZDUtility.showAlert("Save failed :'(", controller: self)
+                    }
                 }
             }
             return nil

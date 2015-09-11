@@ -21,7 +21,9 @@ extension PFQuery {
             if !localResult.isEmpty {
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
                     if Reachability.isConnectedToNetwork() {
-                        self.executeFromNetworkAndSaveToLocalDatastore()
+                        self.unpinLocalStore(localResult).continueWithSuccessBlock({ (_) -> AnyObject! in
+                            self.executeFromNetworkAndSaveToLocalDatastore()
+                        })
                     }
                 }
                 return localTask
@@ -29,6 +31,15 @@ extension PFQuery {
                 return self.executeFromNetworkAndSaveToLocalDatastore()
             }
         })
+    }
+
+    func unpinLocalStore(objects: [PFObject]) -> BFTask {
+        var tasks: [BFTask] = []
+        for object in objects {
+            println("object = \(object)")
+            tasks += [object.unpinInBackground()]
+        }
+        return BFTask(forCompletionOfAllTasks: tasks)
     }
 
     private func executeFromNetworkAndSaveToLocalDatastore() -> BFTask {
@@ -48,7 +59,9 @@ extension PFQuery {
                 let localResult = localTask.result as! PFObject
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
                     if Reachability.isConnectedToNetwork() {
-                        self.fetchByObjectIdFromNetworkAndSaveToLocalDatastore(objectId)
+                        self.unpinLocalStore([localResult]).continueWithSuccessBlock({ (_) -> AnyObject! in
+                            self.fetchByObjectIdFromNetworkAndSaveToLocalDatastore(objectId)
+                        })
                     }
                 }
                 return localTask
@@ -75,6 +88,10 @@ extension BFTask {
     convenience init(DZDErrorInfo: String) {
         self.init(DZDErrorInfo: DZDErrorInfo, DZDErrorCode: 5566)
     }
+}
+
+struct DZDError {
+    static let DuplicateValue = 137
 }
 
 class DZDParseUtility {
@@ -131,12 +148,30 @@ class DZDDataCenter {
     }
 
     static func saveWeight(weight: Double, date: NSDate) -> BFTask {
+        // check is any data saved in the same day
+        let query = PFQuery(className: DZDDB.TabelWeight)
+        query.whereKey(DZDDB.Weight.Date, greaterThan: date.unixtimeZeroAM)
+        query.whereKey(DZDDB.Weight.Date, lessThan: date.unixtimeZeroAM + 86400)
+        query.fromLocalDatastore()
+        return query.countObjectsInBackground().continueWithSuccessBlock({ (task) -> AnyObject! in
+            let count = task.result as! Int
+            if count > 0 {
+                return BFTask(DZDErrorInfo: "duplicated data in same day", DZDErrorCode: DZDError.DuplicateValue)
+            } else {
+                return self.saveWeightForced(weight, date: date)
+            }
+        })
+    }
+
+    static func saveWeightForced(weight: Double, date: NSDate) -> BFTask {
         let object = PFObject(className: DZDDB.TabelWeight)
         object[DZDDB.Weight.User] = PFUser.currentUser()
         object[DZDDB.Weight.Weight] = weight
         object[DZDDB.Weight.Date] = date.unixtime
-        object.saveEventually()
-        return BFTask(result: true)
+        return object.pinInBackground().continueWithSuccessBlock { (_) -> AnyObject! in
+            object.saveEventually()
+            return BFTask(result: true)
+        }
     }
 
     static func getWeights() -> BFTask {
