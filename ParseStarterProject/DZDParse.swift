@@ -197,9 +197,13 @@ class DZDDataCenter {
             let date = object[DZDDB.Weight.Date] as! Int
 
             if let oldObject = existed[date.dateString] {
-                // object is more recent than oldObject
-                if object.updatedAt!.compare(oldObject.updatedAt!) == .OrderedDescending {
-                    existed[date.dateString] = object
+                existed[date.dateString] = object
+
+                // if old object is more recent than this object
+                if let thisObjectUpdatedAt = object.updatedAt, oldObjectUpdatedAt = oldObject.updatedAt {
+                    if thisObjectUpdatedAt.compare(oldObjectUpdatedAt) == .OrderedAscending {
+                        existed[date.dateString] = oldObject
+                    }
                 }
             } else {
                 existed[date.dateString] = object
