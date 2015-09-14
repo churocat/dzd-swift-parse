@@ -36,7 +36,6 @@ extension PFQuery {
     func unpinLocalStore(objects: [PFObject]) -> BFTask {
         var tasks: [BFTask] = []
         for object in objects {
-            println("object = \(object)")
             tasks += [object.unpinInBackground()]
         }
         return BFTask(forCompletionOfAllTasks: tasks)
@@ -177,6 +176,46 @@ class DZDDataCenter {
     static func getWeights() -> BFTask {
         let query = PFQuery(className: DZDDB.TabelWeight)
         query.whereKey(DZDDB.Weight.User, equalTo: PFUser.currentUser()!)
-        return query.execute()
+        query.orderByAscending(DZDDB.Weight.Date)
+        return query.execute().continueWithSuccessBlock({ (task) -> AnyObject! in
+            if let objects = task.result as? [PFObject] {
+                var weights = self.getPerDayWeights(objects)
+                return BFTask(result: weights)
+            } else {
+                return BFTask(DZDErrorInfo: "wrong result")
+            }
+        })
+    }
+
+    static func getPerDayWeights(objects: [PFObject]) -> [DZDWeight] {
+        var weights: [DZDWeight] = []
+
+        // there might be more than one weight in a day
+        // make only one weight in a day
+        var existed: [String:PFObject] = [:]
+        for object in objects {
+            let date = object[DZDDB.Weight.Date] as! Int
+
+            if let oldObject = existed[date.dateString] {
+                // object is more recent than oldObject
+                if object.updatedAt!.compare(oldObject.updatedAt!) == .OrderedDescending {
+                    existed[date.dateString] = object
+                }
+            } else {
+                existed[date.dateString] = object
+            }
+        }
+
+        // make weights array
+        for (_, object) in existed {
+            let weight = object[DZDDB.Weight.Weight] as! Double
+            let date = object[DZDDB.Weight.Date] as! Int
+            weights += [DZDWeight(weight: weight, date: date)]
+        }
+
+        // sort by date
+        weights.sort() { return $0.date < $1.date }
+
+        return weights
     }
 }

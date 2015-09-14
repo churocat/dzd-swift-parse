@@ -155,10 +155,23 @@
                                     <segue destination="V1J-qV-XYD" kind="show" id="dDZ-kp-Q5L"/>
                                 </connections>
                             </button>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2JD-Gj-bSz">
+                                <rect key="frame" x="16" y="200" width="568" height="200"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="200" id="xeA-jK-WY2"/>
+                                </constraints>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="2JD-Gj-bSz" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="2qL-wE-ZTf"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="oc0-Bk-RZr" secondAttribute="bottom" id="AOh-oJ-XD6"/>
+                            <constraint firstAttribute="centerY" secondItem="2JD-Gj-bSz" secondAttribute="centerY" id="BBa-Fo-MxI"/>
+                            <constraint firstItem="2JD-Gj-bSz" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="Bf5-dO-p0K"/>
                             <constraint firstItem="oc0-Bk-RZr" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="FR7-DP-OoH"/>
                             <constraint firstAttribute="centerY" secondItem="VLD-oY-jQr" secondAttribute="centerY" id="H72-M0-7EV"/>
                             <constraint firstAttribute="centerX" secondItem="VLD-oY-jQr" secondAttribute="centerX" id="P4J-Se-0iN"/>
@@ -171,6 +184,7 @@
                     <connections>
                         <outlet property="memberCollectionView" destination="oc0-Bk-RZr" id="Q4Q-3t-3uQ"/>
                         <outlet property="spinner" destination="VLD-oY-jQr" id="Xlp-JH-inc"/>
+                        <outlet property="tempTextView" destination="2JD-Gj-bSz" id="Cyq-F5-EAE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

@@ -42,7 +42,7 @@ class DZDUtility
 
         controller.presentViewController(alert, animated: true, completion: nil)
     }
-
+    
     
     static var colorCount = 0
     static func getColor() -> UIColor {
@@ -102,5 +102,22 @@ extension NSDate
         let dateString = dateFormatter.stringFromDate(self)
         let date = dateFormatter.dateFromString(dateString)!
         return date.unixtime
+    }
+}
+
+extension Int
+{
+    var dateString: String {
+        let nsDate = NSDate(timeIntervalSince1970: NSTimeInterval(self))
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        return dateFormatter.stringFromDate(nsDate)
+    }
+
+    var datetimeString: String {
+        let nsDate = NSDate(timeIntervalSince1970: NSTimeInterval(self))
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        return dateFormatter.stringFromDate(nsDate)
     }
 }

@@ -32,7 +32,6 @@ class AddItemViewController: UIViewController
                 if task.error == nil {
                     DZDUtility.showAlert("Save successfully!", title: "Yeah!", controller: self) {
                         DZDDataCenter.getWeights().continueWithSuccessBlock({ (task) -> AnyObject! in
-                            println("weights = \(task.result)")
                             return nil
                         })
                         self.dismissViewControllerAnimated(true, completion: nil)

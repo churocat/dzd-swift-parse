@@ -31,6 +31,20 @@ class DZDDrawableUser {
     }
 }
 
+class DZDWeight : Printable {
+    var weight: Double
+    var date: Int
+    var description: String {
+        return "\(date.datetimeString) \(weight) \n"
+    }
+
+    init (weight: Double, date: Int) {
+        self.weight = weight
+        self.date = date
+    }
+}
+
+
 extension UIActivityIndicatorView {
     func startAnimatingAndBeginIgnoringUI() {
         self.startAnimating()

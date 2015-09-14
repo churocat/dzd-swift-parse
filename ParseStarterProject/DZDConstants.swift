@@ -8,11 +8,15 @@
 
 import Foundation
 
-struct DZDSegue {
+struct DZDSegue
+{
     static let ShowGroupViewChart = "showGroupChart"
 }
 
-struct DZDDB {
+
+struct DZDDB
+{
+
     static let TabelParticipate = "Participate"
     struct Participate {
         static let Username = "username"
@@ -36,4 +40,5 @@ struct DZDDB {
         static let Weight = "weight"
         static let Date = "date"
     }
+
 }

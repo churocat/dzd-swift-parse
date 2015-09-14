@@ -15,8 +15,9 @@ class GroupChartViewController: UIViewController, UICollectionViewDelegate, UICo
     // MARK: - Outlet
     
     @IBOutlet weak var memberCollectionView: UICollectionView!
-    @IBOutlet weak var spinner: UIActivityIndicatorView!
-    
+    @IBOutlet weak var spinner: UIActivityIndicatorView!    
+    @IBOutlet weak var tempTextView: UITextView!
+
     // MARK: - Property
     
     let currentDrawableUser = DZDDrawableUser(user: DZDUser.currentUser()!)
@@ -41,7 +42,20 @@ class GroupChartViewController: UIViewController, UICollectionViewDelegate, UICo
         
         refreshMembers()
     }
-    
+
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+
+        DZDDataCenter.getWeights().continueWithSuccessBlock { (task) -> AnyObject! in
+            if let weights = task.result as? [DZDWeight] {
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.tempTextView.text = "\(weights)"
+                }
+            }
+            return nil
+        }
+    }
+
     func refreshMembers() {
         spinner.startAnimatingAndBeginIgnoringUI()
         
