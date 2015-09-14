@@ -17,18 +17,21 @@ extension PFQuery {
         var localQuery = self.copy() as! PFQuery
         localQuery.fromLocalDatastore()
         return localQuery.findObjectsInBackground().continueWithBlock({ (localTask) -> AnyObject! in
-            let localResult = localTask.result as! [PFObject]
-            if !localResult.isEmpty {
-                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
-                    if Reachability.isConnectedToNetwork() {
-                        self.unpinLocalStore(localResult).continueWithSuccessBlock({ (_) -> AnyObject! in
-                            self.executeFromNetworkAndSaveToLocalDatastore()
-                        })
+            if let localResult = localTask.result as? [PFObject] {
+                if !localResult.isEmpty {
+                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+                        if Reachability.isConnectedToNetwork() {
+                            self.unpinLocalStore(localResult).continueWithSuccessBlock({ (_) -> AnyObject! in
+                                self.executeFromNetworkAndSaveToLocalDatastore()
+                            })
+                        }
                     }
+                    return localTask
+                } else {
+                    return self.executeFromNetworkAndSaveToLocalDatastore()
                 }
-                return localTask
             } else {
-                return self.executeFromNetworkAndSaveToLocalDatastore()
+                return BFTask(DZDErrorInfo: "execute but no results")
             }
         })
     }
@@ -55,15 +58,18 @@ extension PFQuery {
         localQuery.fromLocalDatastore()
         return localQuery.getObjectInBackgroundWithId(objectId).continueWithBlock({ (localTask) -> AnyObject! in
             if localTask.error == nil {
-                let localResult = localTask.result as! PFObject
-                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
-                    if Reachability.isConnectedToNetwork() {
-                        self.unpinLocalStore([localResult]).continueWithSuccessBlock({ (_) -> AnyObject! in
-                            self.fetchByObjectIdFromNetworkAndSaveToLocalDatastore(objectId)
-                        })
+                if let localResult = localTask.result as? PFObject {
+                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+                        if Reachability.isConnectedToNetwork() {
+                            self.unpinLocalStore([localResult]).continueWithSuccessBlock({ (_) -> AnyObject! in
+                                self.fetchByObjectIdFromNetworkAndSaveToLocalDatastore(objectId)
+                            })
+                        }
                     }
+                    return localTask
+                } else {
+                    return BFTask(DZDErrorInfo: "fetch but no results")
                 }
-                return localTask
             } else {
                 return self.fetchByObjectIdFromNetworkAndSaveToLocalDatastore(objectId)
             }
@@ -170,6 +176,25 @@ class DZDDataCenter {
         return object.pinInBackground().continueWithSuccessBlock { (_) -> AnyObject! in
             object.saveEventually()
             return BFTask(result: true)
+        }
+    }
+
+    static func deleteWeight(date: NSDate) -> BFTask {
+        let query = PFQuery(className: DZDDB.TabelWeight)
+        query.whereKey(DZDDB.Weight.Date, greaterThan: date.unixtimeZeroAM)
+        query.whereKey(DZDDB.Weight.Date, lessThan: date.unixtimeZeroAM + 86400)
+        return query.execute().continueWithSuccessBlock { (task) -> AnyObject! in
+            if let objects = DZDParseUtility.checkResultArrayNotZero(task.result) {
+                var tasks: [BFTask] = []
+                for object in objects {
+                    object.deleteEventually()
+                    tasks += [object.unpinInBackground()]
+                }
+                return BFTask(forCompletionOfAllTasks: tasks)
+            } else {
+                // empty to delete
+                return BFTask(result: false)
+            }
         }
     }
 
