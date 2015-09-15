@@ -15,6 +15,7 @@
 		486FFA721B95C45E000710C8 /* MemberCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486FFA711B95C45E000710C8 /* MemberCollectionViewCell.swift */; };
 		486FFA741B95C664000710C8 /* ProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486FFA731B95C664000710C8 /* ProfileImageView.swift */; };
 		486FFA761B95C83C000710C8 /* DZDDataStructure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486FFA751B95C83C000710C8 /* DZDDataStructure.swift */; };
+		48ECCF401BA829AE0076D91D /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48ECCF3F1BA829AE0076D91D /* ChatViewController.swift */; };
 		814C3ACA1B69877600E307BB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 814C3AC61B69877600E307BB /* Main.storyboard */; };
 		814C3ACB1B69877600E307BB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 814C3AC81B69877600E307BB /* Images.xcassets */; };
 		81BA814B1A49DA1800E65899 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BA814A1A49DA1800E65899 /* AppDelegate.swift */; };
@@ -36,6 +37,7 @@
 		486FFA711B95C45E000710C8 /* MemberCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemberCollectionViewCell.swift; sourceTree = "<group>"; };
 		486FFA731B95C664000710C8 /* ProfileImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileImageView.swift; sourceTree = "<group>"; };
 		486FFA751B95C83C000710C8 /* DZDDataStructure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DZDDataStructure.swift; sourceTree = "<group>"; };
+		48ECCF3F1BA829AE0076D91D /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		814C3AC71B69877600E307BB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		814C3AC81B69877600E307BB /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		814C3AC91B69877600E307BB /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -74,6 +76,7 @@
 			isa = PBXGroup;
 			children = (
 				814C3AC61B69877600E307BB /* Main.storyboard */,
+				48ECCF3F1BA829AE0076D91D /* ChatViewController.swift */,
 				486FFA711B95C45E000710C8 /* MemberCollectionViewCell.swift */,
 				486FFA731B95C664000710C8 /* ProfileImageView.swift */,
 			);
@@ -253,6 +256,7 @@
 			files = (
 				486FFA761B95C83C000710C8 /* DZDDataStructure.swift in Sources */,
 				486FFA741B95C664000710C8 /* ProfileImageView.swift in Sources */,
+				48ECCF401BA829AE0076D91D /* ChatViewController.swift in Sources */,
 				486FFA6C1B95418C000710C8 /* DZDConstants.swift in Sources */,
 				486FFA721B95C45E000710C8 /* MemberCollectionViewCell.swift in Sources */,
 				486FFA701B954584000710C8 /* DZDUtility.swift in Sources */,

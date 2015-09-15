@@ -167,6 +167,7 @@
                             </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="2JD-Gj-bSz" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="2qL-wE-ZTf"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="oc0-Bk-RZr" secondAttribute="bottom" id="AOh-oJ-XD6"/>
@@ -180,6 +181,9 @@
                             <constraint firstItem="iWr-j7-1GZ" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="qtt-6v-tdN"/>
                             <constraint firstItem="iWr-j7-1GZ" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" id="smi-eL-bK5"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="Afp-IW-xYG" appends="YES" id="gPJ-R8-NSM"/>
+                        </connections>
                     </view>
                     <connections>
                         <outlet property="memberCollectionView" destination="oc0-Bk-RZr" id="Q4Q-3t-3uQ"/>
@@ -188,8 +192,40 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <swipeGestureRecognizer direction="up" id="Afp-IW-xYG">
+                    <connections>
+                        <segue destination="JjJ-Oy-rQk" kind="show" id="PHp-uI-8Ph"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="225" y="-356"/>
+        </scene>
+        <!--Chat View Controller-->
+        <scene sceneID="2e2-eF-UI6">
+            <objects>
+                <viewController id="JjJ-Oy-rQk" customClass="ChatViewController" customModule="ParseStarterProject_Swift" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="fSd-td-7MD"/>
+                        <viewControllerLayoutGuide type="bottom" id="PkO-6l-81z"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="kZS-et-V23">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="0.92753734923245601" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="VRt-0e-rKf" appends="YES" id="fE4-Jn-LcO"/>
+                        </connections>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="TYl-Rt-GYy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <swipeGestureRecognizer direction="down" id="VRt-0e-rKf">
+                    <connections>
+                        <action selector="swipeDown:" destination="JjJ-Oy-rQk" id="pXr-3s-gJc"/>
+                    </connections>
+                </swipeGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="225" y="443"/>
         </scene>
         <!--Add Item View Controller-->
         <scene sceneID="dfJ-KF-Dcx">
