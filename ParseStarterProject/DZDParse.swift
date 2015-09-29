@@ -117,6 +117,7 @@ class DZDDataCenter {
         let query = PFQuery(className: DZDDB.TabelGame)
         query.whereKey(DZDDB.Game.Members, equalTo: user)
         query.includeKey(DZDDB.Game.Members)
+
         return query.execute().continueWithSuccessBlock { (task) -> BFTask! in
             if let games = DZDParseUtility.checkResultArrayNotZero(task.result) {
                 return BFTask(result: games[0].objectId)

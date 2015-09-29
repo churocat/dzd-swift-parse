@@ -86,6 +86,27 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="VLD-oY-jQr">
+                                <rect key="frame" x="290" y="290" width="20" height="20"/>
+                            </activityIndicatorView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iWr-j7-1GZ">
+                                <rect key="frame" x="16" y="0.0" width="568" height="67"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="46"/>
+                                <state key="normal" title="+">
+                                    <color key="titleColor" red="0.89411764705882357" green="0.23529411764705882" blue="0.094117647058823528" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2JD-Gj-bSz">
+                                <rect key="frame" x="16" y="200" width="568" height="200"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="200" id="xeA-jK-WY2"/>
+                                </constraints>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="oc0-Bk-RZr">
                                 <rect key="frame" x="0.0" y="500" width="600" height="100"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -141,30 +162,6 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="pHw-cR-tu2"/>
                                 </connections>
                             </collectionView>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="VLD-oY-jQr">
-                                <rect key="frame" x="290" y="290" width="20" height="20"/>
-                            </activityIndicatorView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iWr-j7-1GZ">
-                                <rect key="frame" x="16" y="0.0" width="568" height="67"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="46"/>
-                                <state key="normal" title="+">
-                                    <color key="titleColor" red="0.89411764705882357" green="0.23529411764705882" blue="0.094117647058823528" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <segue destination="V1J-qV-XYD" kind="show" id="dDZ-kp-Q5L"/>
-                                </connections>
-                            </button>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2JD-Gj-bSz">
-                                <rect key="frame" x="16" y="200" width="568" height="200"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="200" id="xeA-jK-WY2"/>
-                                </constraints>
-                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
@@ -182,19 +179,20 @@
                             <constraint firstItem="iWr-j7-1GZ" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" id="smi-eL-bK5"/>
                         </constraints>
                         <connections>
-                            <outletCollection property="gestureRecognizers" destination="Afp-IW-xYG" appends="YES" id="gPJ-R8-NSM"/>
+                            <outletCollection property="gestureRecognizers" destination="5KD-87-Gfk" appends="YES" id="Wii-aT-UYg"/>
                         </connections>
                     </view>
                     <connections>
                         <outlet property="memberCollectionView" destination="oc0-Bk-RZr" id="Q4Q-3t-3uQ"/>
                         <outlet property="spinner" destination="VLD-oY-jQr" id="Xlp-JH-inc"/>
                         <outlet property="tempTextView" destination="2JD-Gj-bSz" id="Cyq-F5-EAE"/>
+                        <segue destination="JjJ-Oy-rQk" kind="custom" identifier="chartToChatSegue" customClass="ChartToChatSegue" customModule="ParseStarterProject_Swift" customModuleProvider="target" id="vey-as-Dj0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
-                <swipeGestureRecognizer direction="up" id="Afp-IW-xYG">
+                <swipeGestureRecognizer direction="up" id="5KD-87-Gfk">
                     <connections>
-                        <segue destination="JjJ-Oy-rQk" kind="show" id="PHp-uI-8Ph"/>
+                        <action selector="swipeUp:" destination="BYZ-38-t0r" id="e2J-d1-4LQ"/>
                     </connections>
                 </swipeGestureRecognizer>
             </objects>
@@ -211,17 +209,84 @@
                     <view key="view" contentMode="scaleToFill" id="kZS-et-V23">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="0.92753734923245601" alpha="1" colorSpace="calibratedWhite"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ewU-hG-PSg">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="100"/>
+                                <color key="backgroundColor" red="0.89411764709999997" green="0.23529411759999999" blue="0.094117647060000004" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="CTP-UX-A5O"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="100" id="sJj-eE-uiU"/>
+                                </constraints>
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="sxN-7R-Lhi">
+                                    <size key="itemSize" width="80" height="80"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="10" minY="10" maxX="10" maxY="10"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="memberCell" id="5lm-v3-rof" customClass="MemberCollectionViewCell" customModule="ParseStarterProject_Swift" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Zov-Gd-4wz" customClass="ProfileImageView" customModule="ParseStarterProject_Swift" customModuleProvider="target">
+                                                    <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
+                                                </imageView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstItem="Zov-Gd-4wz" firstAttribute="leading" secondItem="5lm-v3-rof" secondAttribute="leading" id="2vh-dh-qaS"/>
+                                            <constraint firstItem="Zov-Gd-4wz" firstAttribute="leading" secondItem="5lm-v3-rof" secondAttribute="leadingMargin" constant="-8" id="FmQ-vI-6D3"/>
+                                            <constraint firstAttribute="bottomMargin" secondItem="Zov-Gd-4wz" secondAttribute="bottom" constant="-16" id="G0F-oy-LMa"/>
+                                            <constraint firstAttribute="trailing" secondItem="Zov-Gd-4wz" secondAttribute="trailing" id="Hbm-dw-pzu"/>
+                                            <constraint firstAttribute="bottom" secondItem="Zov-Gd-4wz" secondAttribute="bottom" id="ZDO-Vm-ivB"/>
+                                            <constraint firstItem="Zov-Gd-4wz" firstAttribute="top" secondItem="5lm-v3-rof" secondAttribute="topMargin" id="bN3-CX-NM0"/>
+                                            <constraint firstItem="Zov-Gd-4wz" firstAttribute="top" secondItem="5lm-v3-rof" secondAttribute="top" id="d1a-Dm-ZiX"/>
+                                            <constraint firstAttribute="trailingMargin" secondItem="Zov-Gd-4wz" secondAttribute="trailing" id="ybN-qA-39O"/>
+                                        </constraints>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="bN3-CX-NM0"/>
+                                                <exclude reference="G0F-oy-LMa"/>
+                                                <exclude reference="ybN-qA-39O"/>
+                                                <exclude reference="FmQ-vI-6D3"/>
+                                            </mask>
+                                        </variation>
+                                        <connections>
+                                            <outlet property="profileImage" destination="Zov-Gd-4wz" id="MtT-x0-v2X"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="1wF-U8-oZr"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="gCC-p3-GLz"/>
+                                </connections>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.99607843137254903" green="0.792156862745098" blue="0.086274509803921567" alpha="1" colorSpace="calibratedRGB"/>
                         <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstItem="ewU-hG-PSg" firstAttribute="top" secondItem="kZS-et-V23" secondAttribute="top" id="1z5-vI-x8r"/>
+                            <constraint firstItem="ewU-hG-PSg" firstAttribute="leading" secondItem="kZS-et-V23" secondAttribute="leading" id="aYf-A6-S6g"/>
+                            <constraint firstAttribute="trailing" secondItem="ewU-hG-PSg" secondAttribute="trailing" id="dtk-6C-HGT"/>
+                        </constraints>
                         <connections>
-                            <outletCollection property="gestureRecognizers" destination="VRt-0e-rKf" appends="YES" id="fE4-Jn-LcO"/>
+                            <outletCollection property="gestureRecognizers" destination="UwW-Xk-xuh" appends="YES" id="eHr-Vg-dIt"/>
                         </connections>
                     </view>
+                    <connections>
+                        <segue destination="zwZ-50-DLP" kind="unwind" identifier="chatToChartSegue" unwindAction="returnFromSegueActions:" id="fu4-Xr-4kA"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TYl-Rt-GYy" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <swipeGestureRecognizer direction="down" id="VRt-0e-rKf">
+                <exit id="zwZ-50-DLP" userLabel="Exit" sceneMemberID="exit"/>
+                <swipeGestureRecognizer direction="down" id="UwW-Xk-xuh">
                     <connections>
-                        <action selector="swipeDown:" destination="JjJ-Oy-rQk" id="pXr-3s-gJc"/>
+                        <action selector="swipeDown:" destination="JjJ-Oy-rQk" id="uET-3C-9fd"/>
                     </connections>
                 </swipeGestureRecognizer>
             </objects>

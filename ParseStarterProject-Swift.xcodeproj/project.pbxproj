@@ -15,6 +15,8 @@
 		486FFA721B95C45E000710C8 /* MemberCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486FFA711B95C45E000710C8 /* MemberCollectionViewCell.swift */; };
 		486FFA741B95C664000710C8 /* ProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486FFA731B95C664000710C8 /* ProfileImageView.swift */; };
 		486FFA761B95C83C000710C8 /* DZDDataStructure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486FFA751B95C83C000710C8 /* DZDDataStructure.swift */; };
+		4883D7651BBA575A00EDE84D /* ChatToChartSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4883D7641BBA575A00EDE84D /* ChatToChartSegue.swift */; };
+		48B7D84F1BB1425600C93634 /* ChartToChatSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B7D84E1BB1425600C93634 /* ChartToChatSegue.swift */; };
 		48ECCF401BA829AE0076D91D /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48ECCF3F1BA829AE0076D91D /* ChatViewController.swift */; };
 		814C3ACA1B69877600E307BB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 814C3AC61B69877600E307BB /* Main.storyboard */; };
 		814C3ACB1B69877600E307BB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 814C3AC81B69877600E307BB /* Images.xcassets */; };
@@ -37,6 +39,8 @@
 		486FFA711B95C45E000710C8 /* MemberCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemberCollectionViewCell.swift; sourceTree = "<group>"; };
 		486FFA731B95C664000710C8 /* ProfileImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileImageView.swift; sourceTree = "<group>"; };
 		486FFA751B95C83C000710C8 /* DZDDataStructure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DZDDataStructure.swift; sourceTree = "<group>"; };
+		4883D7641BBA575A00EDE84D /* ChatToChartSegue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatToChartSegue.swift; sourceTree = "<group>"; };
+		48B7D84E1BB1425600C93634 /* ChartToChatSegue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartToChatSegue.swift; sourceTree = "<group>"; };
 		48ECCF3F1BA829AE0076D91D /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		814C3AC71B69877600E307BB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		814C3AC81B69877600E307BB /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -76,7 +80,6 @@
 			isa = PBXGroup;
 			children = (
 				814C3AC61B69877600E307BB /* Main.storyboard */,
-				48ECCF3F1BA829AE0076D91D /* ChatViewController.swift */,
 				486FFA711B95C45E000710C8 /* MemberCollectionViewCell.swift */,
 				486FFA731B95C664000710C8 /* ProfileImageView.swift */,
 			);
@@ -86,9 +89,12 @@
 		486FFA781B969E95000710C8 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				81BA814C1A49DA1800E65899 /* GroupChartViewController.swift */,
 				486FFA691B953FBC000710C8 /* LoginViewController.swift */,
+				81BA814C1A49DA1800E65899 /* GroupChartViewController.swift */,
+				48ECCF3F1BA829AE0076D91D /* ChatViewController.swift */,
 				4802831F1BA01AD5000281FD /* AddItemViewController.swift */,
+				48B7D84E1BB1425600C93634 /* ChartToChatSegue.swift */,
+				4883D7641BBA575A00EDE84D /* ChatToChartSegue.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -264,7 +270,9 @@
 				486FFA6E1B95424D000710C8 /* DZDParse.swift in Sources */,
 				486FFA6A1B953FBC000710C8 /* LoginViewController.swift in Sources */,
 				81BA814D1A49DA1800E65899 /* GroupChartViewController.swift in Sources */,
+				4883D7651BBA575A00EDE84D /* ChatToChartSegue.swift in Sources */,
 				81BA814B1A49DA1800E65899 /* AppDelegate.swift in Sources */,
+				48B7D84F1BB1425600C93634 /* ChartToChatSegue.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

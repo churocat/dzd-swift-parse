@@ -19,7 +19,7 @@ class GroupChartViewController: UIViewController, UICollectionViewDelegate, UICo
     @IBOutlet weak var tempTextView: UITextView!
 
     // MARK: - Property
-    
+
     let currentDrawableUser = DZDDrawableUser(user: DZDUser.currentUser()!)
     var otherDrawableMembers: [DZDDrawableUser] = [] {
         didSet {
@@ -67,6 +67,26 @@ class GroupChartViewController: UIViewController, UICollectionViewDelegate, UICo
             self.otherDrawableMembers = members.map { return DZDDrawableUser(user: $0) }
             return nil
         })
+    }
+
+    @IBAction func swipeUp(sender: AnyObject) {
+        self.performSegueWithIdentifier("chartToChatSegue", sender: self)
+    }
+
+    @IBAction func returnFromSegueActions(sender: UIStoryboardSegue){
+
+    }
+
+    override func segueForUnwindingToViewController(toViewController: UIViewController, fromViewController: UIViewController, identifier: String?) -> UIStoryboardSegue {
+        if let id = identifier{
+            if id == "chatToChartSegue" {
+                let unwindSegue = ChatToChartSegue(identifier: id, source: fromViewController, destination: toViewController, performHandler: { () -> Void in
+                })
+                return unwindSegue
+            }
+        }
+
+        return super.segueForUnwindingToViewController(toViewController, fromViewController: fromViewController, identifier: identifier)
     }
 
     // MARK: - UICollectionView
